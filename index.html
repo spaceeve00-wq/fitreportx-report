@@ -129,7 +129,8 @@ function render(r,base){
   if(num(m.avgKnee))items.push(['평균 무릎 각도',Math.round(m.avgKnee),'°','']);
   if(num(m.torso))items.push(['상체 기울기',Math.round(m.torso),'°','수직 기준']);
   if(num(m.down)||num(m.up))items.push(['내려가기 / 올라오기',`${num(m.down)?m.down.toFixed(1):'-'} / ${num(m.up)?m.up.toFixed(1):'-'}`,'초','평균 템포']);
-  if(num(m.consistency))items.push(['깊이 일관성','±'+m.consistency.toFixed(1),'°','반복 간 편차, 작을수록 일정','wide']);
+  if(num(m.consistency))items.push(['깊이 일관성','±'+m.consistency.toFixed(1),'°','반복 간 편차']);
+  if(items.length%2===1)items[items.length-1][4]='wide';
   $('metrics').innerHTML=items.map(x=>`<div class="m ${x[4]||''}"><div class="l">${x[0]}</div><div class="n">${x[1]}<small>${x[2]}</small></div>${x[3]?`<div class="h">${x[3]}</div>`:''}</div>`).join('');
   show('secMetrics',items.length>0);
   // reps bars
