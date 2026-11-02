@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0A0A0A">
+<title>핏리포트X · 오늘의 수업 리포트</title>
+<meta property="og:title" content="핏리포트X · 오늘의 수업 리포트">
+<meta property="og:description" content="AI 스마트안경이 측정한 오늘의 운동 리포트">
+<style>
+:root{--bg:#0A0A0A;--card:#1E2128;--card2:#2C303A;--line:#2D2D31;--p:#36FFEE;--p5:#19AB9F;--plite:#1A3332;--txt:#EFEFF5;--g8:#A3A3AE;--g7:#7F8893;--red:#F84444;--redlite:#2D1212}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--txt);font-family:"Pretendard","SamsungOneKorean","Noto Sans KR",-apple-system,system-ui,sans-serif;font-size:15px;line-height:1.5}
+.app{max-width:520px;margin:0 auto;padding:0 18px 40px}
+header{display:flex;align-items:center;justify-content:space-between;padding:18px 0 6px}
+.logo{font-weight:800;font-size:21px;letter-spacing:-.3px}.logo b{color:var(--p)}
+.hero{background:var(--plite);border-radius:22px;padding:20px;margin-top:10px}
+.hero .k{color:var(--g8);font-size:13px}
+.hero h1{font-size:22px;margin:4px 0 2px;line-height:1.3}
+.hero .meta{color:var(--g8);font-size:13px}
+.badge{display:inline-flex;align-items:center;gap:6px;margin-top:12px;font-size:12px;font-weight:700;color:var(--p);background:rgba(54,255,238,.1);border:1px solid rgba(54,255,238,.3);border-radius:20px;padding:5px 10px}
+.score{display:flex;align-items:center;gap:18px;margin-top:16px}
+.gauge{width:104px;height:104px;flex:none;position:relative}
+.gauge svg{transform:rotate(-90deg)}
+.gauge .v{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.gauge .v b{font-size:30px;line-height:1}.gauge .v span{font-size:11px;color:var(--g8)}
+.score .txt{font-size:14px;color:var(--txt)}
+h3{font-size:17px;margin:28px 0 12px}
+.card{background:var(--card);border-radius:16px;padding:16px;border:1px solid #23262d;margin-bottom:12px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.m{background:var(--card);border:1px solid #23262d;border-radius:16px;padding:14px}
+.m .l{font-size:12px;color:var(--g8)}.m .n{font-size:24px;font-weight:800;margin-top:4px}.m .n small{font-size:13px;color:var(--g8);font-weight:600;margin-left:2px}
+.m .h{font-size:11px;color:var(--g7);margin-top:2px}
+.m.wide{grid-column:1/-1}
+.bars{display:flex;align-items:flex-end;gap:10px;height:150px;padding:6px 4px 0;border-bottom:1px solid var(--line);position:relative}
+.bar{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%}
+.bar i{display:block;width:100%;max-width:38px;border-radius:8px 8px 3px 3px;background:linear-gradient(180deg,var(--p),var(--p5))}
+.bar i.worst{background:linear-gradient(180deg,#ff8a8a,var(--red))}
+.bar em{font-style:normal;font-size:12px;font-weight:700;margin-bottom:4px}
+.blabels{display:flex;gap:10px;padding:6px 4px 0}.blabels span{flex:1;text-align:center;font-size:11px;color:var(--g7)}
+.note{font-size:12px;color:var(--g7);margin-top:8px}
+.photos{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ph{border-radius:14px;overflow:hidden;background:var(--card2);position:relative;aspect-ratio:3/4;cursor:zoom-in}
+.ph img{width:100%;height:100%;object-fit:cover;display:block}
+.ph .tag{position:absolute;left:8px;top:8px;font-size:11px;font-weight:700;padding:3px 8px;border-radius:6px;background:var(--plite);color:var(--p)}
+.ph .tag.fix{background:var(--redlite);color:#ff9a9a}
+.cap{font-size:12px;color:var(--g8);margin-top:6px}
+ul.c{margin:0;padding-left:0;list-style:none}
+ul.c li{position:relative;padding:10px 0 10px 26px;border-bottom:1px solid var(--line);font-size:14px}
+ul.c li:last-child{border-bottom:0}
+ul.c li:before{content:"";position:absolute;left:4px;top:17px;width:9px;height:9px;border-radius:50%;background:var(--p5)}
+.ai{border:1px solid rgba(54,255,238,.35);background:linear-gradient(180deg,rgba(26,51,50,.9),rgba(30,33,40,.95))}
+.ai-h{display:flex;align-items:center;gap:8px;font-weight:700;color:var(--p);margin-bottom:6px}
+.next li:before{background:var(--p)}
+footer{text-align:center;color:var(--g7);font-size:12px;margin-top:34px}
+footer b{color:var(--txt)}
+.state{text-align:center;padding:90px 10px;color:var(--g8)}
+.state h2{color:var(--txt);font-size:19px;margin:16px 0 6px}
+.spin{width:30px;height:30px;border:3px solid var(--p5);border-top-color:transparent;border-radius:50%;animation:sp .8s linear infinite;margin:0 auto}
+@keyframes sp{to{transform:rotate(360deg)}}
+.zoom{position:fixed;inset:0;background:rgba(0,0,0,.92);display:none;align-items:center;justify-content:center;z-index:9;padding:16px}
+.zoom.on{display:flex}.zoom img{max-width:100%;max-height:100%;border-radius:10px}
+.hide{display:none!important}
+.fade{animation:fd .4s ease both}@keyframes fd{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header><div class="logo">FitReport<b>X</b></div><div style="font-size:12px;color:var(--g7)">회원 리포트</div></header>
+  <div id="state" class="state"><div class="spin"></div><h2>리포트를 불러오는 중</h2><div>잠시만 기다려 주세요</div></div>
+  <main id="main" class="hide">
+    <section class="hero fade">
+      <div class="k">오늘의 수업 리포트</div>
+      <h1 id="title"></h1>
+      <div class="meta" id="meta"></div>
+      <div class="badge"><svg width="14" height="14" viewBox="0 0 48 48" fill="none" stroke="#36FFEE" stroke-width="4" stroke-linecap="round"><circle cx="13" cy="27" r="8"/><circle cx="35" cy="27" r="8"/><path d="M21 27c1-2 5-2 6 0"/></svg>AI 스마트안경이 측정했어요</div>
+      <div class="score" id="scoreWrap">
+        <div class="gauge"><svg width="104" height="104"><circle cx="52" cy="52" r="44" stroke="#2C303A" stroke-width="10" fill="none"/><circle id="gArc" cx="52" cy="52" r="44" stroke="#36FFEE" stroke-width="10" fill="none" stroke-linecap="round" stroke-dasharray="276.5" stroke-dashoffset="276.5" style="transition:stroke-dashoffset 1.2s ease"/></svg><div class="v"><b id="score">0</b><span>자세 점수</span></div></div>
+        <div class="txt" id="scoreTxt"></div>
+      </div>
+    </section>
+
+    <section id="secMetrics"><h3>핵심 지표</h3><div class="grid" id="metrics"></div></section>
+    <section id="secReps"><h3>반복별 무릎 각도</h3><div class="card"><div class="bars" id="bars"></div><div class="blabels" id="blabels"></div><div class="note">각도가 작을수록 깊게 앉은 거예요. 빨간 막대는 가장 얕았던 반복이에요.</div></div></section>
+    <section id="secPhotos"><h3>안경이 포착한 순간</h3><div class="photos" id="photos"></div></section>
+    <section id="secSummary"><h3>AI 수업 요약</h3><div class="card ai"><div class="ai-h"><svg width="18" height="18" viewBox="0 0 24 24" fill="#36FFEE"><path d="M12 2l2.2 6.3L20 10l-5.8 1.7L12 18l-2.2-6.3L4 10l5.8-1.7z"/></svg>측정값 기반 요약</div><div id="summary"></div></div></section>
+    <section id="secComments"><h3>코칭 코멘트</h3><div class="card"><ul class="c" id="comments"></ul></div></section>
+    <section id="secNext"><h3>다음 수업 목표</h3><div class="card"><ul class="c next" id="next"></ul></div></section>
+    <footer><b>핏리포트X</b> · 트레이너의 수업을 데이터로</footer>
+  </main>
+</div>
+<div class="zoom" id="zoom" onclick="this.classList.remove('on')"><img id="zimg" alt=""></div>
+<script>
+const SUPABASE_URL='https://xazdypwvjfpewvhaoeev.supabase.co';
+const BUCKET='fx-reports';
+const $=id=>document.getElementById(id);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const num=v=>typeof v==='number'&&isFinite(v);
+function fail(t,d){$('state').innerHTML=`<svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#7F8893" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16.5v.5"/></svg><h2>${t}</h2><div>${d}</div>`}
+function fmtDate(iso){const d=iso?new Date(iso):null;if(!d||isNaN(d))return '';return `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`}
+function show(id,on){$(id).classList.toggle('hide',!on)}
+async function load(){
+  const id=new URLSearchParams(location.search).get('id');
+  if(!id||!/^[A-Za-z0-9_\-]+$/.test(id))return fail('리포트 주소가 올바르지 않아요','QR을 다시 찍어 주세요.');
+  const base=`${SUPABASE_URL}/storage/v1/object/public/${BUCKET}/${encodeURIComponent(id)}/`;
+  let r=null;
+  for(let i=0;i<4&&!r;i++){
+    try{const res=await fetch(base+'report.json?t='+Date.now(),{cache:'no-store'});if(res.ok)r=await res.json();else if(res.status!==404&&res.status!==400)throw 0}catch(e){}
+    if(!r)await new Promise(ok=>setTimeout(ok,1500));
+  }
+  if(!r)return fail('리포트를 찾을 수 없어요','아직 업로드 중일 수 있어요. 잠시 후 새로고침해 주세요.');
+  render(r,base);
+}
+function render(r,base){
+  const m=r.metrics||{};
+  $('title').textContent=`${r.member||'회원'}님, 오늘도 수고했어요`;
+  $('meta').textContent=[fmtDate(r.createdAt),r.trainer?`트레이너 ${r.trainer}`:'',r.exercise||''].filter(Boolean).join(' · ');
+  document.title=`핏리포트X · ${r.member||'회원'}님 수업 리포트`;
+  // score
+  if(num(r.score)){const s=Math.max(0,Math.min(100,Math.round(r.score)));
+    setTimeout(()=>{$('gArc').style.strokeDashoffset=276.5*(1-s/100)},150);
+    let c=0;const t=setInterval(()=>{c=Math.min(s,c+2);$('score').textContent=c;if(c>=s)clearInterval(t)},18);
+    $('scoreTxt').innerHTML=`<b style="font-size:16px">${s>=85?'아주 좋아요':s>=70?'좋아요':s>=55?'조금만 더':'함께 다듬어 봐요'}</b><br><span style="color:var(--g8)">${esc(r.exercise||'운동')} ${num(m.reps)?m.reps+'회':''}를 안경이 직접 측정했어요</span>`;
+  }else show('scoreWrap',false);
+  // metrics
+  const items=[];
+  if(num(m.reps))items.push(['반복 횟수',m.reps,'회','']);
+  if(num(m.minKnee))items.push(['가장 깊은 무릎 각도',Math.round(m.minKnee),'°','작을수록 깊게 앉음']);
+  if(num(m.avgKnee))items.push(['평균 무릎 각도',Math.round(m.avgKnee),'°','']);
+  if(num(m.torso))items.push(['상체 기울기',Math.round(m.torso),'°','수직 기준']);
+  if(num(m.down)||num(m.up))items.push(['내려가기 / 올라오기',`${num(m.down)?m.down.toFixed(1):'-'} / ${num(m.up)?m.up.toFixed(1):'-'}`,'초','평균 템포']);
+  if(num(m.consistency))items.push(['깊이 일관성','±'+m.consistency.toFixed(1),'°','반복 간 편차, 작을수록 일정','wide']);
+  $('metrics').innerHTML=items.map(x=>`<div class="m ${x[4]||''}"><div class="l">${x[0]}</div><div class="n">${x[1]}<small>${x[2]}</small></div>${x[3]?`<div class="h">${x[3]}</div>`:''}</div>`).join('');
+  show('secMetrics',items.length>0);
+  // reps bars
+  const reps=(r.reps||[]).filter(x=>num(x.knee));
+  if(reps.length){
+    const ks=reps.map(x=>x.knee),mx=Math.max(...ks),mn=Math.min(...ks);
+    const lo=Math.min(60,mn-10),hi=Math.max(180,mx);
+    $('bars').innerHTML=reps.map(x=>{const depth=(hi-x.knee)/(hi-lo);const h=Math.max(12,Math.round(depth*100));return `<div class="bar"><em>${Math.round(x.knee)}°</em><i class="${x.knee===mx&&reps.length>1&&mx!==mn?'worst':''}" style="height:${h}%"></i></div>`}).join('');
+    $('blabels').innerHTML=reps.map((x,i)=>`<span>${x.n||i+1}회</span>`).join('');
+  }
+  show('secReps',reps.length>0);
+  // photos
+  const im=r.images||{},ph=[];
+  if(im.best)ph.push(['best',im.best,im.bestCaption||'가장 좋았던 순간','잘한 자세','']);
+  if(im.fix)ph.push(['fix',im.fix,im.fixCaption||'다듬을 순간','다듬을 자세','fix']);
+  $('photos').innerHTML=ph.map(p=>`<div><div class="ph" onclick="zoom('${base+encodeURIComponent(p[1])}')"><img src="${base+encodeURIComponent(p[1])}" alt="${esc(p[2])}" onerror="this.parentNode.parentNode.style.display='none'"><span class="tag ${p[4]}">${p[3]}</span></div><div class="cap">${esc(p[2])}</div></div>`).join('');
+  show('secPhotos',ph.length>0);
+  $('summary').innerHTML=r.summary?`<div>${esc(r.summary)}</div>`:'';show('secSummary',!!r.summary);
+  const cm=(r.comments||[]).filter(Boolean);$('comments').innerHTML=cm.map(x=>`<li>${esc(x)}</li>`).join('');show('secComments',cm.length>0);
+  const nx=(r.next||[]).filter(Boolean);$('next').innerHTML=nx.map(x=>`<li>${esc(x)}</li>`).join('');show('secNext',nx.length>0);
+  $('state').classList.add('hide');$('main').classList.remove('hide');
+}
+function zoom(src){$('zimg').src=src;$('zoom').classList.add('on')}
+load();
+</script>
+</body>
+</html>
